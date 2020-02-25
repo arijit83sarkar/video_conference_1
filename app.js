@@ -23,12 +23,17 @@ function cameraStart() {
 
 // Take a picture when cameraTrigger is tapped
 cameraTrigger.onclick = function() {
-    cameraSensor.width = cameraView.videoWidth;
-    cameraSensor.height = cameraView.videoHeight;
-    cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
-    cameraOutput.src = cameraSensor.toDataURL("image/webp");
-    cameraOutput.classList.add("taken");
-    // track.stop();
+    if (typeof HTMLVideoElement !== "undefined" && cameraView instanceof HTMLVideoElement){
+        cameraSensor.width = cameraView.videoWidth;
+        cameraSensor.height = cameraView.videoHeight;
+        cameraSensor.getContext("2d").drawImage(cameraView, 0, 0);
+        cameraOutput.src = cameraSensor.toDataURL("image/webp");
+        cameraOutput.classList.add("taken");
+        // track.stop();
+        console.log("takeScreenshot() :: screenshot taken.")
+    }else{
+        console.log("takeScreenshot() :: problem in taking screenshot.")
+    }
 };
 
 // Start the video stream when the window loads
